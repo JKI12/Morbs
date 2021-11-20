@@ -8,16 +8,32 @@ public class Beacon : MonoBehaviour
     [SerializeField]
     public GameObject Beam;
 
-    public void Start()
+    public void Awake()
     {
         Assert.IsNotNull(Beam);
     }
 
+    public void Start()
+    {
+        Debug.Log("Start");
+    }
+
     public void ActivateBeacon()
     {
-        if (!IsActive) {
+        if (!IsActive)
+        {
             IsActive = true;
             Beam.SetActive(true);
+
+            GameManager.Instance.PlaySound(GameManager.SoundEffectTypes.BEACON);
+        }
+    }
+
+    public void OnTriggerEnter(Collider collider)
+    {
+        if (collider.tag == "Player")
+        {
+            ActivateBeacon();
         }
     }
 }

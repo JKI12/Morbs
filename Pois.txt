@@ -1,0 +1,4 @@
+Middle point: 53.694892, -1.484330
+Football field: 53.694396, -1.482259
+Postbox: 53.694352, -1.478729
+Nature Reserve: 53.688481, -1.462900
