@@ -1,15 +1,10 @@
 using UnityEngine;
 using System.Linq;
-using Mapbox.Unity.Map;
-using Mapbox.Unity.MeshGeneration.Data;
-using Mapbox.Unity.Utilities;
+using System.Collections.Generic;
 
 public class GameManager : Singleton<GameManager>
 {
-    private AudioSource audioSource;
-
-    [SerializeField]
-    public AbstractMap map;
+    private AudioSource AudioSource;
 
     public enum SoundEffectTypes
     {
@@ -25,23 +20,36 @@ public class GameManager : Singleton<GameManager>
 
     public SoundEffect[] SoundEffects;
 
+    private List<string> ActiveBeacons = new List<string>();
+
     public void Start()
     {
-        audioSource = FindObjectOfType<AudioSource>();
-
-        map.OnTileFinished += (UnityTile tile) => Debug.Log("tile finished");
+        AudioSource = FindObjectOfType<AudioSource>();
     }
 
     public void PlaySound(SoundEffectTypes sfx)
     {
-        if (audioSource != null)
+        if (AudioSource != null)
         {
             var clip = SoundEffects.Where<SoundEffect>(x => x.Key == sfx).FirstOrDefault();
 
             if (clip != null)
             {
-                audioSource.PlayOneShot(clip.Sound);
+                AudioSource.PlayOneShot(clip.Sound);
             }
         }
+    }
+
+    public void SaveBeaconToState(string id)
+    {
+        if (!ActiveBeacons.Contains(id))
+        {
+            ActiveBeacons.Add(id);
+        }
+    }
+
+    public bool IsBeaconActive(string id)
+    {
+        return ActiveBeacons.Contains(id);
     }
 }

@@ -1,4 +1,4 @@
 public static class MorbsConstants
 {
-    public static string TagPoiBeacon = "PoiBeacon"; 
+    public static string UuidKey = "uuid";
 }
